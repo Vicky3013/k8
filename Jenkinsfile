@@ -8,7 +8,7 @@ pipeline {
     stage('Checkout Code') {
       steps {
         echo 'Pulling from Github'
-        git branch: 'main', credentialsId: 'mygithubcred', url: 'https://github.com/chntraining/k8test.git'
+        git branch: 'main', credentialsId: 'git.credentials', url: 'https://github.com/Vicky3013/k8.git'
       }
     }
     stage('Test Code') {
@@ -40,11 +40,11 @@ pipeline {
     stage('Push Docker Image to DockerHub') {
       steps {
         echo 'Pushing  Docker Image'
-        withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'DOCKER_PASS')]) {
+        withCredentials([string(credentialsId: 'k8-docker', variable: 'DOCKER_PASS')]) {
   	      bat '''
-          echo %DOCKER_PASS% | docker login -u deepikkaa20 --password-stdin
-          docker tag myjavaproj:1.0 deepikkaa20/myindiaproj:1.0
-          docker push deepikkaa20/myindiaproj:1.0
+          echo %DOCKER_PASS% | docker login -u vignesh848 --password-stdin
+          docker tag myjavaproj:1.0 vignesh848/myindiaproj:1.0
+          docker push vignesh848/myindiaproj:1.0
           '''}
       }
     }
